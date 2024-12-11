@@ -24,6 +24,8 @@ public class AwaitPlayers implements GameState
     {
         try (var listener = new ServerSocket(port))
         {
+            System.out.println("Server started on IP: " + listener.getInetAddress().getHostAddress());
+            System.out.println("Listening on port: " + listener.getLocalPort());
             while (true)
             {
                 Player player = new Player(listener.accept(), new PipedOutputStream(server.moveInputStream));

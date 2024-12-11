@@ -1,5 +1,4 @@
-public abstract class Game
+public interface Game
 {
-    Board board;
-    Ruleset ruleset;
+
 }

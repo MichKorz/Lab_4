@@ -1,5 +1,8 @@
-public class GameClassic extends Game
+public class GameClassic implements Game
 {
+    Board board;
+    Ruleset ruleset;
+
     public GameClassic()
     {
         board = new BoardClassic();
