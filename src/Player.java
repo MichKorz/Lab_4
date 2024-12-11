@@ -6,25 +6,22 @@ import java.io.PrintWriter;
 
 public class Player implements Runnable
 {
-    private Socket socket;
-    private Scanner in;
-    private PrintWriter out;
-    private PrintWriter moveOut;
+    private final Socket socket;
+    public PrintWriter out;
+    private final PrintWriter moveOut;
 
     private boolean isTurn;
 
-    public Player(Socket socket, PipedOutputStream moveStream) throws IOException
+    public Player(Socket socket, PipedOutputStream moveStream)
     {
         this.socket = socket;
-        this.in = new Scanner(socket.getInputStream());
-        this.out = new PrintWriter(socket.getOutputStream(), true);
-
-        this. moveOut = new PrintWriter(moveStream, true);
+        this.moveOut = new PrintWriter(moveStream, true);
     }
 
     @Override
     public void run()
     {
+        Scanner in;
         try
         {
             in = new Scanner(socket.getInputStream());
@@ -38,11 +35,13 @@ public class Player implements Runnable
         while (in.hasNextLine())
         {
             var line = in.nextLine();
+            System.out.println("(Debug print) received line: " + line);
             if (getTurn())
             {
                 moveOut.println(line);
             }
         }
+        System.out.println("Closing connection");
     }
 
     synchronized boolean getTurn()

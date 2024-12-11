@@ -1,17 +1,17 @@
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.io.PipedInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server
 {
     private static Server instance;
-    ExecutorService pool;
-    public int port;
+    int playerCount;
+    private final int port;
 
-    private Server(int port, int playersCount)
+    private Server(int port, int playerCount)
     {
         this.port = port;
-        pool = Executors.newFixedThreadPool(playersCount);
-        System.out.println("The chat server is running...");
+        this.playerCount = playerCount;
     }
 
     public static Server getInstance(int port, int playersCount)
@@ -26,24 +26,32 @@ public class Server
     Game game;
 
     // Game variant setup
-    String Setup()
+    void Setup()
     {
         game = new GameClassic();
-        return "Setup successful";
     }
 
     public boolean isRunning;
     GameState gameState;
+    public PipedInputStream moveInputStream;
+    public List<Player> players;
 
 
     void Run()
     {
         isRunning = true;
-        gameState = new AwaitPlayers(this);
+        gameState = LaunchNewGame();
 
         while(isRunning)
         {
             gameState.stateLoop();
         }
+    }
+
+    public GameState LaunchNewGame()
+    {
+        moveInputStream = new PipedInputStream();
+        players = new ArrayList<>();
+        return new AwaitPlayers(this, playerCount, port);
     }
 }
