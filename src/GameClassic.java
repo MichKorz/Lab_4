@@ -8,4 +8,16 @@ public class GameClassic implements Game
         board = new BoardClassic();
         ruleset = new RulesetClassic();
     }
+
+    @Override
+    public boolean ValidateMove(String move)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean IsOver()
+    {
+        return true;
+    }
 }
