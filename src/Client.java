@@ -9,28 +9,36 @@ public class Client {
 
         try (Socket socket = new Socket(serverHost, serverPort);
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-             Scanner scanner = new Scanner(System.in)) {
+             Scanner scanner = new Scanner(System.in))
+        {
 
             System.out.println("Connected to the server. Start typing messages:");
 
-            // Thread to listen for server responses
             new Thread(() -> {
-                try (BufferedReader serverReader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                try (Scanner serverReader = new Scanner(socket.getInputStream()))
+                {
                     String response;
-                    while ((response = serverReader.readLine()) != null) {
+                    while (serverReader.hasNextLine())
+                    {
+                        response = serverReader.nextLine();
                         System.out.println("Server: " + response);
                     }
-                } catch (IOException e) {
+                    System.out.println("Server stopped.");
+                }
+                catch (IOException e)
+                {
                     System.out.println("Connection closed by server.");
                 }
             }).start();
 
             // Main thread to handle user input and send messages to the server
-            while (true) {
+            while (true)
+            {
                 System.out.print("You: ");
                 String input = scanner.nextLine();
 
-                if ("exit".equalsIgnoreCase(input)) {
+                if ("exit".equalsIgnoreCase(input))
+                {
                     System.out.println("Closing connection...");
                     break;
                 }
@@ -38,8 +46,10 @@ public class Client {
                 writer.println(input); // Send input to the server
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException();
         }
     }
 }
