@@ -1,6 +1,8 @@
 import java.io.PipedInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server
 {
@@ -23,7 +25,7 @@ public class Server
         return instance;
     }
 
-    Game game;
+    public Game game;
 
     // Game variant setup
     void Setup()
@@ -33,7 +35,7 @@ public class Server
 
     public boolean isRunning;
     GameState gameState;
-    public PipedInputStream moveInputStream;
+    BlockingQueue<String> moveInputStream;
     public List<Player> players;
 
 
@@ -50,7 +52,7 @@ public class Server
 
     public GameState LaunchNewGame()
     {
-        moveInputStream = new PipedInputStream();
+        moveInputStream = new LinkedBlockingQueue<>();
         players = new ArrayList<>();
         return new AwaitPlayers(this, playerCount, port);
     }

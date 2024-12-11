@@ -1,21 +1,22 @@
 import java.io.IOException;
-import java.io.PipedOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 import java.io.PrintWriter;
+import java.util.concurrent.BlockingQueue;
 
 public class Player implements Runnable
 {
     private final Socket socket;
     public PrintWriter out;
-    private final PrintWriter moveOut;
+    BlockingQueue<String> moveOut;
 
     private boolean isTurn;
 
-    public Player(Socket socket, PipedOutputStream moveStream)
+    public Player(Socket socket, BlockingQueue<String> moveStream)
     {
         this.socket = socket;
-        this.moveOut = new PrintWriter(moveStream, true);
+        moveOut = moveStream;
+        isTurn = false;
     }
 
     @Override
@@ -38,7 +39,14 @@ public class Player implements Runnable
             System.out.println("(Debug print) received line: " + line);
             if (getTurn())
             {
-                moveOut.println(line);
+                try
+                {
+                    moveOut.put(line);
+                }
+                catch (InterruptedException e)
+                {
+                    throw new RuntimeException(e);
+                }
             }
         }
         System.out.println("Closing connection");

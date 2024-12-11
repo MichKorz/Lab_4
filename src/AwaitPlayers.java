@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.PipedOutputStream;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,7 +27,7 @@ public class AwaitPlayers implements GameState
             System.out.println("Listening on port: " + listener.getLocalPort());
             while (true)
             {
-                Player player = new Player(listener.accept(), new PipedOutputStream(server.moveInputStream));
+                Player player = new Player(listener.accept(), server.moveInputStream);
                 server.players.add(player);
                 pool.execute(player);
                 playerCount++;
@@ -49,6 +48,6 @@ public class AwaitPlayers implements GameState
     public void endState()
     {
         System.out.println("Entering main game loop");
-        server.gameState = new GameLoop();
+        server.gameState = new GameLoop(this.server);
     }
 }
