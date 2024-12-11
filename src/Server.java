@@ -1,4 +1,4 @@
-import java.io.PipedInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -33,13 +33,13 @@ public class Server
         game = new GameClassic();
     }
 
-    public boolean isRunning;
-    GameState gameState;
-    BlockingQueue<String> moveInputStream;
-    public List<Player> players;
+    private boolean isRunning;
+    private GameState gameState;
+    private BlockingQueue<String> serverInputStream;
+    private List<Player> players;
 
 
-    void Run()
+    void Run() throws IOException
     {
         isRunning = true;
         gameState = LaunchNewGame();
@@ -48,12 +48,34 @@ public class Server
         {
             gameState.stateLoop();
         }
+
+        System.out.println("Server Run Finished");
     }
 
     public GameState LaunchNewGame()
     {
-        moveInputStream = new LinkedBlockingQueue<>();
+        serverInputStream = new LinkedBlockingQueue<>();
         players = new ArrayList<>();
         return new AwaitPlayers(this, playerCount, port);
+    }
+
+    public void ChangeState(GameState newState)
+    {
+        gameState = newState;
+    }
+
+    public BlockingQueue<String> getQueue()
+    {
+        return serverInputStream;
+    }
+
+    public List<Player> getPlayerList()
+    {
+        return players;
+    }
+
+    public void setActive(boolean active)
+    {
+        isRunning = active;
     }
 }

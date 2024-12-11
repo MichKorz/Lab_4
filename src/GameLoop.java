@@ -9,19 +9,21 @@ public class GameLoop implements GameState
     public GameLoop(Server server)
     {
         this.server = server;
-        moveIn = server.moveInputStream;
+        moveIn = server.getQueue();
     }
 
     @Override
     public void stateLoop()
     {
+        int playerCount = server.getPlayerList().size();
         Player currentPlayer;
-        int index = new Random().nextInt(server.players.size());
+        int index = new Random().nextInt(playerCount);
         while (true)
         {
-            index = (index + 1)%server.players.size();
-            currentPlayer = server.players.get(index);
+            index = (index + 1)%playerCount;
+            currentPlayer = server.getPlayerList().get(index);
             currentPlayer.setTurn(true);
+            System.out.println("player's: " + index + " turn");
 
             String move = "";
             try
@@ -30,26 +32,26 @@ public class GameLoop implements GameState
             }
             catch (InterruptedException e)
             {
-                e.printStackTrace();
+                throw new RuntimeException();
             }
 
             if (server.game.ValidateMove(move)) PropagateMove(move);
             currentPlayer.setTurn(false);
             if (server.game.IsOver()) break;
         }
-        System.out.println("Game over");
         endState();
     }
 
     @Override
     public void endState()
     {
-        server.gameState = new EndGame();
+        System.out.println("Game over");
+        server.ChangeState(new EndGame(this.server));
     }
 
     void PropagateMove(String move)
     {
-        for (Player player : server.players)
+        for (Player player : server.getPlayerList())
         {
             player.out.println(move);
         }

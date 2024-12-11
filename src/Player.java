@@ -61,4 +61,9 @@ public class Player implements Runnable
     {
         this.isTurn = turn;
     }
+
+    public Socket getSocket()
+    {
+        return socket;
+    }
 }

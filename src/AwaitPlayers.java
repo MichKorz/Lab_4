@@ -27,8 +27,8 @@ public class AwaitPlayers implements GameState
             System.out.println("Listening on port: " + listener.getLocalPort());
             while (true)
             {
-                Player player = new Player(listener.accept(), server.moveInputStream);
-                server.players.add(player);
+                Player player = new Player(listener.accept(), server.getQueue());
+                server.getPlayerList().add(player);
                 pool.execute(player);
                 playerCount++;
                 System.out.println("Added player " + playerCount + "/" + targetCount);
@@ -48,6 +48,6 @@ public class AwaitPlayers implements GameState
     public void endState()
     {
         System.out.println("Entering main game loop");
-        server.gameState = new GameLoop(this.server);
+        server.ChangeState(new GameLoop(this.server));
     }
 }

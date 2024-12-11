@@ -1,5 +1,7 @@
+import java.io.IOException;
+
 public interface GameState
 {
-    void stateLoop();
+    void stateLoop() throws IOException;
     void endState();
 }
