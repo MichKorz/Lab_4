@@ -38,7 +38,7 @@ public class GameLoop implements GameState
                 throw new RuntimeException();
             }
 
-            if (server.game.ValidateMove(move)) PropagateMove(move);
+            if (server.game.ValidateMove(move)) PropagateMove(move); //update board then propagete it
             currentPlayer.setTurn(false);
             if (server.game.IsOver()) break;
         }

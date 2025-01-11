@@ -1,6 +1,7 @@
 package com.game;
 
-public abstract class Ruleset
+public interface Ruleset
 {
-
+    void HighlightTiles(int x, int y);
+    Boolean validateMove(int[] commands, boolean isTurnOver);
 }

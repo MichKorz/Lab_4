@@ -32,6 +32,7 @@ public class AwaitPlayers implements GameState
                 Player player = new Player(listener.accept(), server.getQueue());
                 server.getPlayerList().add(player);
                 pool.execute(player);
+                //wyslij informacje o planszy
                 playerCount++;
                 System.out.println("Added player " + playerCount + "/" + targetCount);
                 if (playerCount == targetCount)

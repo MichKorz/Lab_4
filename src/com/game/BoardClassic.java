@@ -63,4 +63,10 @@ public class BoardClassic implements Board
 
         return occupied == 10;
     }
+
+    @Override
+    public Tile GetTileAt(int x, int y) {
+        if(x < 0 || x >= 17 || y < 0 || y >= 25) return null;
+        return board[x][y];
+    }
 }
