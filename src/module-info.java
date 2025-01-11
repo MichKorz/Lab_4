@@ -3,5 +3,5 @@ module javafx {
     requires javafx.fxml;
     requires java.desktop;
 
-    opens com.game;
+    opens server;
 }

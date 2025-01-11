@@ -1,4 +1,4 @@
-package com.game;
+package server;
 
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;

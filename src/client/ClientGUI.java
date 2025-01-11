@@ -1,4 +1,4 @@
-package com.game;
+package client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,17 +7,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class GameGUI extends Application {
+public class ClientGUI extends Application
+{
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GameGUI.class.getResource("hello-view.fxml"));
+    public void start(Stage stage) throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientGUI.class.getResource("client-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch();
     }
 }

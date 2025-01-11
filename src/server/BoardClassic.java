@@ -1,4 +1,4 @@
-package com.game;
+package server;
 
 public class BoardClassic implements Board
 {

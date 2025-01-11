@@ -1,4 +1,4 @@
-package com.game;
+package server;
 
 public interface Board
 {
