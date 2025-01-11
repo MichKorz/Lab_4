@@ -1,3 +1,5 @@
+package com.game;
+
 public class BoardClassic implements Board
 {
     Tile[][] board = new Tile[17][25];

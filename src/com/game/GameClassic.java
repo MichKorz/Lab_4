@@ -1,3 +1,5 @@
+package com.game;
+
 public class GameClassic implements Game
 {
     Board board;

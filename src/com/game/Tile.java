@@ -1,3 +1,5 @@
+package com.game;
+
 public class Tile
 {
     private final int owner; // 1-6 domy graczy, 0 - puste pole planszy, 9 - nie nalezy do gwiazdy

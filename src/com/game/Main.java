@@ -1,3 +1,5 @@
+package com.game;
+
 import java.io.IOException;
 
 public class Main
