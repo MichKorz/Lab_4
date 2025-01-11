@@ -30,7 +30,7 @@ public class Server
     // Game variant setup
     void Setup()
     {
-        game = new GameClassic();
+        game = new GameClassic(playerCount);
     }
 
     private boolean isRunning;

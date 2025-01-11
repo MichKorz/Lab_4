@@ -21,6 +21,7 @@ public class GameLoop implements GameState
         while (true)
         {
             index = (index + 1)%playerCount;
+            System.out.println("Index = " + index);
             currentPlayer = server.getPlayerList().get(index);
             currentPlayer.setTurn(true);
             System.out.println("player's: " + index + " turn");

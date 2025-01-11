@@ -5,9 +5,9 @@ public class GameClassic implements Game
 
     int movesMade; // Temp for debug purposes
 
-    public GameClassic()
+    public GameClassic(int playerCount)
     {
-        board = new BoardClassic();
+        board = new BoardClassic(playerCount);
         ruleset = new RulesetClassic();
 
         movesMade = 0;

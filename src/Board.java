@@ -1,4 +1,4 @@
-public abstract class Board
+public interface Board
 {
-
+    Boolean IsHomeOccupied(int player);
 }
