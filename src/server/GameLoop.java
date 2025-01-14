@@ -80,7 +80,7 @@ public class GameLoop implements GameState
     {
         for (Player player : server.getPlayerList())
         {
-            player.out.println(move);
+            player.sendMessage(move);
         }
     }
 

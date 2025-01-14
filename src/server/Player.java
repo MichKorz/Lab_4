@@ -9,16 +9,20 @@ import java.util.concurrent.BlockingQueue;
 public class Player implements Runnable
 {
     private final Socket socket;
-    public PrintWriter out;
-    BlockingQueue<String> moveOut;
+    private PrintWriter out;
+    final BlockingQueue<String> moveOut;
+
+    String initialMessage;
 
     private boolean isTurn;
 
-    public Player(Socket socket, BlockingQueue<String> moveStream)
+    public Player(Socket socket, BlockingQueue<String> moveStream, String initialMessage)
     {
         this.socket = socket;
         moveOut = moveStream;
         isTurn = false;
+
+        this.initialMessage = initialMessage;
     }
 
     @Override
@@ -34,6 +38,8 @@ public class Player implements Runnable
         {
             throw new RuntimeException(e);
         }
+
+        out.println(initialMessage);
 
         while (in.hasNextLine())
         {
@@ -67,5 +73,13 @@ public class Player implements Runnable
     public Socket getSocket()
     {
         return socket;
+    }
+
+    public void sendMessage(String message)
+    {
+        synchronized (moveOut)
+        {
+            out.println(message);
+        }
     }
 }
