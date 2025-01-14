@@ -30,9 +30,10 @@ public class Server
     public Game game;
 
     // Game variant setup
-    void Setup()
+    void Setup(String variant) // I changed it ~ Sara
     {
-        game = new GameClassic(playerCount);
+        if(variant.equals("Chaos")) game = new GameChaos(playerCount);
+        else game = new GameClassic(playerCount);
     }
 
     private boolean isRunning;

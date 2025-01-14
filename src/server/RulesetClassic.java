@@ -2,6 +2,9 @@ package server;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.Math.abs;
 
 public class RulesetClassic implements Ruleset
 {
@@ -26,26 +29,50 @@ public class RulesetClassic implements Ruleset
         CheckForTiles(x, y, 1, 1);
         CheckForTiles(x, y, 1, -1);
         CheckForTiles(x, y, -1, -1);
+
+        System.out.println("Highlighted tiles for tile: " + x + ", " + y);
+        for(Point p : possibleTiles)
+        {
+            System.out.println("H X: " + p.x + ", Y: " + p.y);
+        }
     }
 
     private void CheckForTiles(int x, int y, int xOffset, int yOffset)
     {
         Tile newTile = board.GetTileAt(x+xOffset, y+yOffset);
+        System.out.print("Checking for tile: " + x + ", " + y + ", " + xOffset + ", " + yOffset);
+        System.out.println(" newtile piece: " + newTile.getPiece() + ", owner: " + newTile.getOwner());
         if(newTile != null && newTile.getOwner() != 9) // check if tile belongs to the board
         {
-            if(newTile.getPiece() == 0) possibleTiles.add(new Point(x+xOffset, y+yOffset));
+            if(newTile.getPiece() == 0)
+            {
+                if(point == null)
+                {
+                    possibleTiles.add(new Point(x+xOffset, y+yOffset));
+                    System.out.print("Tile no hop. ");
+                }
+            }
             else
             {
                 newTile = board.GetTileAt(x+xOffset+xOffset, y+yOffset+yOffset);
-                if(newTile.getPiece() == 0) possibleTiles.add(new Point(x+xOffset, y+yOffset));
+                if(newTile != null && newTile.getPiece() == 0 && newTile.getOwner() != 9)
+                {
+                    System.out.print("Tile hop. ");
+                    possibleTiles.add(new Point(x+xOffset+xOffset, y+yOffset+yOffset));
+                }
             }
         }
     }
 
     @Override
-    public Boolean validateMove(int[] commands, boolean isTurnOver)
+    public Boolean validateMove(int[] commands, AtomicBoolean isTurnOver) // initialX initialY destinationX destinationY validato playerIndex
     {
-        final int playerIndex = commands[4];
+        if(point != null) {
+            System.out.println("Line 64");
+            if(point.x != commands[0] && point.y != commands[1]) return false;
+        }
+
+        final int playerIndex = commands[commands.length-1];
         final int x = commands[0];
         final int y = commands[1];
         final int finalX = commands[2];
@@ -58,14 +85,29 @@ public class RulesetClassic implements Ruleset
         Point newPos = new Point(finalX, finalY);
         for(Point possibleTile : possibleTiles)
         {
-            if(possibleTile == newPos)
+            if(possibleTile.x == newPos.x && possibleTile.y == newPos.y)
             {
+                if((abs(possibleTile.x-x) + abs(possibleTile.y-y)) == 2){ // if piece moves without hoping over
+                    isTurnOver.set(true);
+                    point = null;
+                }
+                else{ // if piece hops
+                    point = newPos;
+                    HighlightTiles(finalX, finalY);
+                    if(possibleTiles.isEmpty())
+                    {
+                        point = null;
+                        isTurnOver.set(true);
+                    }
+                }
+                System.out.println("Possible tile: " + possibleTile.getX() + " " + possibleTile.getY());
                 initialTile.setPiece(0);
                 Tile destinationTile = board.GetTileAt(finalX, finalY);
                 destinationTile.setPiece(playerIndex);
-                HighlightTiles(finalX, finalY);
+                return true;
             }
         }
+
         return false;
     }
 }

@@ -2,9 +2,9 @@ package server;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GameClassic extends Game
+public class GameChaos extends Game
 {
-    public GameClassic(int playerCount)
+    public GameChaos(int playerCount)
     {
         super(playerCount);
         isTurnOver = new AtomicBoolean(false);
@@ -14,7 +14,7 @@ public class GameClassic extends Game
 
     @Override
     public void InitializeGame(int playerCount) {
-        board = new BoardClassic(playerCount);
+        board = new BoardChaos(playerCount);
         ruleset = new RulesetClassic(board);
     }
 
