@@ -19,10 +19,10 @@ public class RulesetClassic implements Ruleset
     }
 
     @Override
-    public void HighlightTiles(int x, int y) // get all possible moves for tile at position (x,y)
+    public String GetHighlightTiles(int x, int y) // get all possible moves for tile at position (x,y)
     {
         Tile tile = board.GetTileAt(x, y);
-        if(tile == null) return;
+        if(tile == null) return "";
         possibleTiles.clear();
 
         CheckForTiles(x, y, -1, 1);
@@ -30,11 +30,18 @@ public class RulesetClassic implements Ruleset
         CheckForTiles(x, y, 1, -1);
         CheckForTiles(x, y, -1, -1);
 
-        System.out.println("Highlighted tiles for tile: " + x + ", " + y);
+        StringBuilder highlight = new StringBuilder();
+        for(Point p : possibleTiles)
+        {
+            highlight.append(p.x + p.y);
+        }
+        return highlight.toString();
+
+        /*System.out.println("Highlighted tiles for tile: " + x + ", " + y);
         for(Point p : possibleTiles)
         {
             System.out.println("H X: " + p.x + ", Y: " + p.y);
-        }
+        }*/
     }
 
     private void CheckForTiles(int x, int y, int xOffset, int yOffset)
@@ -93,7 +100,7 @@ public class RulesetClassic implements Ruleset
                 }
                 else{ // if piece hops
                     point = newPos;
-                    HighlightTiles(finalX, finalY);
+                    String w = GetHighlightTiles(finalX, finalY); // MOVE IT TO GAMELOOP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     if(possibleTiles.isEmpty())
                     {
                         point = null;

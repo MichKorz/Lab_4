@@ -54,7 +54,7 @@ public class ClientApplication extends Application
         FXMLLoader gameLoader = new FXMLLoader(ClientApplication.class.getResource(gameVariant + ".fxml"));
         try
         {
-            Scene gameScene = new Scene(gameLoader.load(), 320, 240);
+            Scene gameScene = new Scene(gameLoader.load(), 690, 550);
             primaryStage.setTitle("'Chinese' Checkers");
             primaryStage.setScene(gameScene);
             primaryStage.show();

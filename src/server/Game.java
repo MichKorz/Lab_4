@@ -20,8 +20,8 @@ public abstract class Game
 
     public abstract void InitializeGame(int playerCount);
 
-    public void SetHighlightedTiles(int x, int y) { // For a tile at x, y set a list of all possible moves
-        ruleset.HighlightTiles(x, y);
+    public String SetHighlightedTiles(int x, int y) { // For a tile at x, y set a list of all possible moves
+        return ruleset.GetHighlightTiles(x, y);
     }
 
     public boolean ValidateMove(String move) // initialX initialY destinationX destinationY validato playerIndex
@@ -35,7 +35,7 @@ public abstract class Game
         }
 
         System.out.println("X = " + commands[0] + " Y = " + commands[1]);
-        SetHighlightedTiles(commands[0], commands[1]); // Not supposed to be here!!!!!!!!!
+        String gl = SetHighlightedTiles(commands[0], commands[1]); // Not supposed to be here!!!!!!!!!
 
         Boolean validation = ruleset.validateMove(commands, isTurnOver);
         if(validation) {
