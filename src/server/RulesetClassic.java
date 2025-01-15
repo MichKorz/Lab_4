@@ -22,7 +22,7 @@ public class RulesetClassic implements Ruleset
     public String GetHighlightTiles(int x, int y) // get all possible moves for tile at position (x,y)
     {
         Tile tile = board.GetTileAt(x, y);
-        if(tile == null) return "";
+        if(tile == null || tile.getPiece() == 0) return "";
         possibleTiles.clear();
 
         CheckForTiles(x, y, -1, 1);
@@ -33,7 +33,7 @@ public class RulesetClassic implements Ruleset
         StringBuilder highlight = new StringBuilder();
         for(Point p : possibleTiles)
         {
-            highlight.append(p.x + p.y);
+            highlight.append(p.x).append(" ").append(p.y).append(" ");
         }
         return highlight.toString();
 

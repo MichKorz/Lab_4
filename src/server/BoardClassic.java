@@ -15,11 +15,22 @@ public class BoardClassic extends Board{
             for(int j = 0; j < 25; j++)
             {
                 int tileOwner = boardOwners[i][j];
-                if(tileOwner > 0 && tileOwner <= playerCount)
+                if(playerCount == 3)
                 {
-                    board[i][j] = new Tile(tileOwner, tileOwner);
+                    if(tileOwner == 1 || tileOwner == 3 || tileOwner == 5)
+                    {
+                        board[i][j] = new Tile(tileOwner, tileOwner);
+                    }
+                    else board[i][j] = new Tile(tileOwner, 0);
                 }
-                else board[i][j] = new Tile(tileOwner, 0);
+                else
+                {
+                    if(tileOwner > 0 && tileOwner <= playerCount)
+                    {
+                        board[i][j] = new Tile(tileOwner, tileOwner);
+                    }
+                    else board[i][j] = new Tile(tileOwner, 0);
+                }
 
                 //Dupaprint
                 if(tileOwner != 9) System.out.print(tileOwner + " ");
