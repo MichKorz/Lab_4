@@ -23,6 +23,7 @@ public class Listener implements Runnable
             // Read until the socket is closed
             while ((message = reader.readLine()) != null)
             {
+                System.out.println("MESSSSSSSAGE IS" + message);
                 interpretMessage(message);
             }
         }
@@ -52,6 +53,7 @@ public class Listener implements Runnable
                 break;
 
             case "/c":
+                System.out.println("HEEEEELOOO " + comps[0] + comps[1]);
                 if (comps.length > 1) controller.printChatMessage(comps[1]);
                 break;
 

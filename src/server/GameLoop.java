@@ -69,7 +69,7 @@ public class GameLoop implements GameState
             }
 
             currentPlayer.sendMessage("/y_0");
-            server.sendChatMessage(" /c_This is the end now ;((( But ooo, ooo");
+            server.sendChatMessage("/c_This is the end now ;((( But ooo, ooo");
             currentPlayer.setTurn(false);
             if (howManyPlayersWon < server.game.HowManyWonGame())
             {
@@ -78,15 +78,15 @@ public class GameLoop implements GameState
                 howManyPlayersWon = server.game.HowManyWonGame();
                 if(howManyPlayersWon == (playerCount-1))
                 {
-                    server.sendChatMessage(" /c_This is the end now ;((( But ooo, ooo\n" +
-                            "Ooo, oo\n" +
-                            "But a nuclear blast\n" +
-                            "Or orange ball of gas\n" +
-                            "Couldn't break me somehow\n" +
-                            "Baby it's just the end now\n" +
-                            "Cold winds blow\n" +
-                            "Across this barren world of ash\n" +
-                            "But its not my fault love is fleeting in a flash\n" +
+                    server.sendChatMessage(" /c_This is the end now ;((( But ooo, ooo" +
+                            "Ooo, oo" +
+                            "But a nuclear blast" +
+                            "Or orange ball of gas" +
+                            "Couldn't break me somehow" +
+                            "Baby it's just the end now" +
+                            "Cold winds blow" +
+                            "Across this barren world of ash" +
+                            "But its not my fault love is fleeting in a flash" +
                             "But oh, how the sky still burns for you");
                     break;
                 }
