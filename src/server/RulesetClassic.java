@@ -10,7 +10,7 @@ public class RulesetClassic implements Ruleset
 {
     private final Board board;
     private final ArrayList<Point> possibleTiles;
-    private Point point = null;
+    public Point point = null;
 
     public RulesetClassic(Board board)
     {
@@ -22,31 +22,35 @@ public class RulesetClassic implements Ruleset
     public String GetHighlightTiles(int x, int y) // get all possible moves for tile at position (x,y)
     {
         Tile tile = board.GetTileAt(x, y);
-        if(tile == null || tile.getPiece() == 0) return "";
+        if(tile == null || (tile.getPiece() == 0 && point == null)) return "";
         possibleTiles.clear();
 
         CheckForTiles(x, y, -1, 1);
         CheckForTiles(x, y, 1, 1);
         CheckForTiles(x, y, 1, -1);
         CheckForTiles(x, y, -1, -1);
+        CheckForTiles(x, y, 0, -2);
+        CheckForTiles(x, y, 0, 2);
+
+        if(possibleTiles.isEmpty()) return "";
 
         StringBuilder highlight = new StringBuilder();
         for(Point p : possibleTiles)
         {
             highlight.append(p.x).append(" ").append(p.y).append(" ");
         }
-        return highlight.toString();
 
-        /*System.out.println("Highlighted tiles for tile: " + x + ", " + y);
-        for(Point p : possibleTiles)
-        {
-            System.out.println("H X: " + p.x + ", Y: " + p.y);
-        }*/
+        System.out.print("(DEBUG) Highlights: " + highlight);
+        if (point == null) System.out.println(" point is null!");
+        else System.out.println(" point is " + point.x + ", " + point.y);
+
+        return highlight.toString();
     }
 
     private void CheckForTiles(int x, int y, int xOffset, int yOffset)
     {
         Tile newTile = board.GetTileAt(x+xOffset, y+yOffset);
+        if(newTile == null) return;
         System.out.print("Checking for tile: " + x + ", " + y + ", " + xOffset + ", " + yOffset);
         System.out.println(" newtile piece: " + newTile.getPiece() + ", owner: " + newTile.getOwner());
         if(newTile != null && newTile.getOwner() != 9) // check if tile belongs to the board
@@ -94,14 +98,16 @@ public class RulesetClassic implements Ruleset
         {
             if(possibleTile.x == newPos.x && possibleTile.y == newPos.y)
             {
-                if((abs(possibleTile.x-x) + abs(possibleTile.y-y)) == 2){ // if piece moves without hoping over
+                // if piece moves without hoping over
+                //if((abs(possibleTile.y-y) == 0) || ((abs(possibleTile.x-x) + abs(possibleTile.y-y)) == 2 && (abs(possibleTile.y-y) != 0)))
+                if((abs(possibleTile.x-x) + abs(possibleTile.y-y)) == 2){
                     isTurnOver.set(true);
                     point = null;
                 }
                 else{ // if piece hops
                     point = newPos;
                     String w = GetHighlightTiles(finalX, finalY); // MOVE IT TO GAMELOOP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    if(possibleTiles.isEmpty())
+                    if(w.isEmpty())
                     {
                         point = null;
                         isTurnOver.set(true);
@@ -111,10 +117,12 @@ public class RulesetClassic implements Ruleset
                 initialTile.setPiece(0);
                 Tile destinationTile = board.GetTileAt(finalX, finalY);
                 destinationTile.setPiece(playerIndex);
+
                 return true;
             }
         }
 
         return false;
     }
+
 }

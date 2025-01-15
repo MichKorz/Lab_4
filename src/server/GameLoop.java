@@ -32,6 +32,7 @@ public class GameLoop implements GameState
 
             currentPlayer = server.getPlayerList().get(index);
             currentPlayer.setTurn(true);
+            currentPlayer.sendMessage("/y_1");
 
             while(true)
             {
@@ -50,20 +51,45 @@ public class GameLoop implements GameState
                 {
                     System.out.println("Successfully moved " + move);
                     PropagateMove(move); //update board then propagete it
-                    if(server.game.isTurnOver()) break;
+                    if(server.game.isTurnOver())
+                    {
+                        server.game.isTurnOver.set(false);
+                        break;
+                    }
                 }
                 else
                 {
                     System.out.println("Wrong move" + move);
+                    if(server.game.isTurnOver())
+                    {
+                        server.game.setIsTurnOver(false);
+                        break;
+                    }
                 }
             }
 
+            currentPlayer.sendMessage("/y_0");
+            server.sendChatMessage(" /c_This is the end now ;((( But ooo, ooo");
             currentPlayer.setTurn(false);
             if (howManyPlayersWon < server.game.HowManyWonGame())
             {
                 System.out.println("OMG! " + howManyPlayersWon + " won the game");
+                server.sendChatMessage("/c_OMG! " + howManyPlayersWon + "st player won the game");
                 howManyPlayersWon = server.game.HowManyWonGame();
-                if(howManyPlayersWon == (playerCount-1)) break;
+                if(howManyPlayersWon == (playerCount-1))
+                {
+                    server.sendChatMessage(" /c_This is the end now ;((( But ooo, ooo\n" +
+                            "Ooo, oo\n" +
+                            "But a nuclear blast\n" +
+                            "Or orange ball of gas\n" +
+                            "Couldn't break me somehow\n" +
+                            "Baby it's just the end now\n" +
+                            "Cold winds blow\n" +
+                            "Across this barren world of ash\n" +
+                            "But its not my fault love is fleeting in a flash\n" +
+                            "But oh, how the sky still burns for you");
+                    break;
+                }
             }
         }
         endState();
@@ -78,9 +104,10 @@ public class GameLoop implements GameState
 
     void PropagateMove(String move)
     {
+        String message = "/m_" + move;
         for (Player player : server.getPlayerList())
         {
-            player.sendMessage(move);
+            player.sendMessage(message);
         }
     }
 

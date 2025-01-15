@@ -29,7 +29,9 @@ public class AwaitPlayers implements GameState
             System.out.println("Listening on port: " + listener.getLocalPort());
             while (true)
             {
-                Player player = new Player(listener.accept(), server.getQueue(), "classic"); //Classic for the time being TODO replace thiiiiiiiiis
+                String initialMessage = server.gameVariant + " " + server.playerCount;
+                System.out.println("(Debug print) initialMessage: " + initialMessage);
+                Player player = new Player(server, listener.accept(), server.getQueue(), initialMessage);
                 server.getPlayerList().add(player);
                 pool.execute(player);
                 playerCount++;

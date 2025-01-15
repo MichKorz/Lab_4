@@ -9,20 +9,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Server
 {
     private static Server instance;
-    int playerCount;
+    public int playerCount;
+    public String gameVariant;
     private final int port;
 
-    private Server(int port, int playerCount)
+    private Server(int port, int playerCount, String gameVariant)
     {
         this.port = port;
         this.playerCount = playerCount;
+        this.gameVariant = gameVariant;
     }
 
-    public static Server getInstance(int port, int playersCount)
+    public static Server getInstance(int port, int playersCount, String gameVariant)
     {
         if (instance == null)
         {
-            instance = new Server(port, playersCount);
+            instance = new Server(port, playersCount, gameVariant);
         }
         return instance;
     }
@@ -30,9 +32,9 @@ public class Server
     public Game game;
 
     // Game variant setup
-    void Setup(String variant) // I changed it ~ Sara
+    void Setup() // I changed it ~ Sara
     {
-        if(variant.equals("Chaos")) game = new GameChaos(playerCount);
+        if(gameVariant.equals("Chaos")) game = new GameChaos(playerCount);
         else game = new GameClassic(playerCount);
     }
 
@@ -80,5 +82,15 @@ public class Server
     public void setActive(boolean active)
     {
         isRunning = active;
+    }
+
+
+    public void sendChatMessage(String message)
+    {
+        for (Player player : getPlayerList())
+        {
+            System.out.println("(Debug print) output sent: " + message);
+            player.sendMessage(message);
+        }
     }
 }

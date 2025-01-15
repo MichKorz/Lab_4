@@ -43,10 +43,11 @@ public class Client
                 // Try to read connection confirmation and game variant
                 try
                 {
-                    String gameVariant = reader.readLine(); // Blocking call, will wait for input
+                    String initialInfo = reader.readLine(); // Blocking call, will wait for input
                     // TODO Verify that the message is in fact a game variant
                     // Ensure the game launch happens on the JavaFX Application Thread
-                    Platform.runLater(() -> app.launchGame(gameVariant));
+                    String[] params = initialInfo.split(" ");
+                    Platform.runLater(() -> app.launchGame(params[0], Integer.parseInt(params[1])));
                     socket.setSoTimeout(0); // Turn off the timeout as the client will wait for server instructions for
                     // the remainder of the game
                 }

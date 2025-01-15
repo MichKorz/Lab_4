@@ -8,6 +8,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class Player implements Runnable
 {
+    private Server server;
+
     private final Socket socket;
     private PrintWriter out;
     final BlockingQueue<String> moveOut;
@@ -16,8 +18,9 @@ public class Player implements Runnable
 
     private boolean isTurn;
 
-    public Player(Socket socket, BlockingQueue<String> moveStream, String initialMessage)
+    public Player(Server server, Socket socket, BlockingQueue<String> moveStream, String initialMessage)
     {
+        this.server = server;
         this.socket = socket;
         moveOut = moveStream;
         isTurn = false;
@@ -45,17 +48,7 @@ public class Player implements Runnable
         {
             var line = in.nextLine();
             System.out.println("(Debug print) received line: " + line);
-            if (getTurn())
-            {
-                try
-                {
-                    moveOut.put(line);
-                }
-                catch (InterruptedException e)
-                {
-                    throw new RuntimeException(e);
-                }
-            }
+            interpretMessage(line);
         }
         System.out.println("Closing connection");
     }
@@ -77,9 +70,40 @@ public class Player implements Runnable
 
     public void sendMessage(String message)
     {
-        synchronized (moveOut)
+        synchronized (out)
         {
             out.println(message);
+        }
+    }
+
+    void interpretMessage(String message)
+    {
+        String[] comps = message.split("_");
+        switch (comps[0])
+        {
+            case "/c":
+                server.sendChatMessage(comps[1]);
+                break;
+
+            case "/h":
+                if (!getTurn()) break;
+                String[] cords = comps[1].split(" ");
+                String output = "/h_" + server.game.SetHighlightedTiles(Integer.parseInt(cords[0]), Integer.parseInt(cords[1]));
+                System.out.println("(Debug print) output sent: " + output);
+                sendMessage(output);
+                break;
+
+            case "/m":
+                if (getTurn()) moveOut.add(comps[1]);
+                break;
+
+            case "/e":
+                if (getTurn())
+                {
+                    server.game.isTurnOver.set(true);
+                    moveOut.add("E");
+                }
+                break;
         }
     }
 }

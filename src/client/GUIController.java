@@ -1,5 +1,6 @@
 package client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,6 +21,12 @@ public class GUIController
     // 192.168.1.10 59001
     public Client client;
 
+    public int playerCount;
+    public Button endTurnButton;
+
+    @FXML
+    public TextField yourTurnField;
+
     @FXML
     private GridPane boardPane;
 
@@ -29,17 +36,40 @@ public class GUIController
     @FXML
     private TextField chatInput;
 
-    @FXML
-    private Button generateButton;
-
-    String highlight;
-    Board board = new BoardClassic(3);
+    String highlight = "";
+    Board board;
     Point initialPoint = null;
 
-    public void highlightCircles(String coordinates, int x, int y)
+
+    public void generateBoard()
+    {
+        yourTurnField.setVisible(false);
+        board = new BoardClassic(playerCount);
+        boardPane.setAlignment(Pos.CENTER);
+        boardPane.setVgap(5);
+        boardPane.setHgap(-10);
+        for (int row = 0; row < 17; row++) {
+            for (int col = 0; col < 25; col++) {
+                Tile tile = board.GetTileAt(row, col);
+                if (tile.getOwner() != 9) {
+                    Circle circle = new Circle(15, getColor(tile.getPiece()));
+                    circle.setStroke(getColor(tile.getPiece()));
+                    circle.setStrokeWidth(2);
+                    circle.setOnMouseClicked(event -> circlePressed(circle));
+                    boardPane.add(circle, col, row);
+                }
+            }
+        }
+    }
+
+    public void setYourTurnField(boolean value)
+    {
+        yourTurnField.setVisible(value);
+    }
+
+    public void highlightCircles(String coordinates)
     {
         highlight = coordinates;
-        initialPoint = new Point(x, y);
 
         String[] splitMove = coordinates.split(" ");
         int[] coords = new int[splitMove.length];
@@ -60,6 +90,7 @@ public class GUIController
 
     public void unlightCircles()
     {
+        if (highlight.isEmpty()) return;
         String[] splitMove = highlight.split(" ");
         int[] coords = new int[splitMove.length];
 
@@ -90,25 +121,6 @@ public class GUIController
         }
     }
 
-    public void generateBoard()
-    {
-        boardPane.setAlignment(Pos.CENTER);
-        boardPane.setVgap(7);
-        boardPane.setHgap(-3);
-        for (int row = 0; row < 17; row++) {
-            for (int col = 0; col < 25; col++) {
-                Tile tile = board.GetTileAt(row, col);
-                if (tile.getOwner() != 9) {
-                    Circle circle = new Circle(12, getColor(tile.getPiece()));
-                    circle.setStroke(getColor(tile.getPiece()));
-                    circle.setStrokeWidth(2);
-                    circle.setOnMouseClicked(event -> circlePressed(circle));
-                    boardPane.add(circle, col, row);
-                }
-            }
-        }
-    }
-
     private void circlePressed(Circle circle)
     {
         Point point = getCircleCoords(circle);
@@ -116,13 +128,16 @@ public class GUIController
         int posY = point.y;
         if(isCircleHighlighted(posX, posY))
         {
-            //client.sendMessage("\m initialPoint.x, initialPoint.y, posX, posY");
+            String message = String.format("/m_%d %d %d %d", initialPoint.x, initialPoint.y, posX, posY);
+            client.sendMessage(message);
         }
         else
         {
-            if(!highlight.isEmpty()) unlightCircles();
-            //client.sendMessage("/h x y");
-            //highlightCircles( inmessage, x, y );
+            initialPoint = point;
+            unlightCircles();
+
+            String message = String.format("/h_%d %d", posX, posY);
+            client.sendMessage(message);
         }
     }
 
@@ -178,4 +193,13 @@ public class GUIController
         };
     }
 
+    public void endTurnButton()
+    {
+        client.sendMessage("/e");
+    }
+
+    public void printChatMessage(String message)
+    {
+        chatArea.appendText(message+"\n");
+    }
 }

@@ -22,7 +22,7 @@ public class ClientApplication extends Application
         FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("connect-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
-        stage.setTitle("Connect to server");
+        stage.setTitle("G̶e̶r̶m̶a̶n̶?̶ Chinese Checkers");
         stage.setScene(scene);
         stage.show();
 
@@ -49,15 +49,18 @@ public class ClientApplication extends Application
         return new Client(this);
     }
 
-    void launchGame(String gameVariant)
+    void launchGame(String gameVariant, int playerCount)
     {
         FXMLLoader gameLoader = new FXMLLoader(ClientApplication.class.getResource(gameVariant + ".fxml"));
         try
         {
-            Scene gameScene = new Scene(gameLoader.load(), 690, 550);
+            Scene gameScene = new Scene(gameLoader.load(), 820, 650);
             primaryStage.setTitle("'Chinese' Checkers");
             primaryStage.setScene(gameScene);
             primaryStage.show();
+            GUIController controller = gameLoader.getController();
+            controller.playerCount = playerCount;
+            controller.generateBoard();
 
             client.LaunchClient(gameLoader.getController());
         }

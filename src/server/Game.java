@@ -1,5 +1,6 @@
 package server;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class Game
@@ -26,16 +27,14 @@ public abstract class Game
 
     public boolean ValidateMove(String move) // initialX initialY destinationX destinationY validato playerIndex
     {
-
         String[] splitMove = move.split(" ");
-        int[] commands = new int[splitMove.length];
+        if (splitMove[0].equals("E"))
+            return false;
 
+        int[] commands = new int[splitMove.length];
         for (int i = 0; i < splitMove.length; i++) {
             commands[i] = Integer.parseInt(splitMove[i]);
         }
-
-        System.out.println("X = " + commands[0] + " Y = " + commands[1]);
-        String gl = SetHighlightedTiles(commands[0], commands[1]); // Not supposed to be here!!!!!!!!!
 
         Boolean validation = ruleset.validateMove(commands, isTurnOver);
         if(validation) {
@@ -50,6 +49,14 @@ public abstract class Game
 
     public boolean isTurnOver() { // if player had moved (not hoped) then its over. if player hoped but then there are no more hops, its over
         return isTurnOver.get();
+    }
+
+    public void setIsTurnOver(boolean isTurnOver)
+    {
+        this.isTurnOver.set(isTurnOver);
+        if(!isTurnOver) {
+            ((RulesetClassic)ruleset).point = null;
+        }
     }
 
     public int HowManyWonGame()
