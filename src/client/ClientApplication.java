@@ -51,7 +51,7 @@ public class ClientApplication extends Application
 
     void launchGame(String gameVariant, int playerCount)
     {
-        FXMLLoader gameLoader = new FXMLLoader(ClientApplication.class.getResource(gameVariant + ".fxml"));
+        FXMLLoader gameLoader = new FXMLLoader(ClientApplication.class.getResource("classic.fxml"));
         try
         {
             Scene gameScene = new Scene(gameLoader.load(), 820, 650);
@@ -60,6 +60,7 @@ public class ClientApplication extends Application
             primaryStage.show();
             GUIController controller = gameLoader.getController();
             controller.playerCount = playerCount;
+            controller.variant = gameVariant;
             controller.generateBoard();
 
             client.LaunchClient(gameLoader.getController());

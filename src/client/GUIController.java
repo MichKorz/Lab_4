@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import server.Board;
+import server.BoardChaos;
 import server.BoardClassic;
 import server.Tile;
 
@@ -22,6 +23,7 @@ public class GUIController
     public Client client;
 
     public int playerCount;
+    public String variant;
     public Button endTurnButton;
 
     @FXML
@@ -43,8 +45,9 @@ public class GUIController
 
     public void generateBoard()
     {
+        if(variant.equals("Chaos")) board = new BoardChaos(playerCount);
+            else board = new BoardClassic(playerCount);
         yourTurnField.setVisible(false);
-        board = new BoardClassic(playerCount);
         boardPane.setAlignment(Pos.CENTER);
         boardPane.setVgap(5);
         boardPane.setHgap(-10);
@@ -53,7 +56,7 @@ public class GUIController
                 Tile tile = board.GetTileAt(row, col);
                 if (tile.getOwner() != 9) {
                     Circle circle = new Circle(15, getColor(tile.getPiece()));
-                    circle.setStroke(getColor(tile.getPiece()));
+                    if(!variant.equals("Chaos")) circle.setStroke(getColor(tile.getPiece()));
                     circle.setStrokeWidth(2);
                     circle.setOnMouseClicked(event -> circlePressed(circle));
                     boardPane.add(circle, col, row);

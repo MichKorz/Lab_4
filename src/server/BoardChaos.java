@@ -26,7 +26,7 @@ public class BoardChaos extends Board
         }
 
         // Set pieces randomly on tiles with no other pieces in the diamond center of the board
-        Random random = new Random();
+        Random random = new Random(1);
         for(int index = 1; index <= playerCount; index++)
         {
             for(int j = 0; j < 10; j++)
