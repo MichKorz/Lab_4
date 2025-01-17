@@ -1,6 +1,5 @@
 package server;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class Game
@@ -11,15 +10,16 @@ public abstract class Game
     AtomicBoolean isTurnOver;
     int movesMade;
 
-    public Game(int playerCount)
+    public Game(int playerCount, Board board)
     {
-        InitializeGame(playerCount);
+        InitializeGame(playerCount, board);
+        this.board = board;
         isTurnOver = new AtomicBoolean(false);
         howManyPlayersWon = 0;
         movesMade = 0;
     }
 
-    public abstract void InitializeGame(int playerCount);
+    public abstract void InitializeGame(int playerCount, Board board);
 
     public String SetHighlightedTiles(int x, int y) { // For a tile at x, y set a list of all possible moves
         return ruleset.GetHighlightTiles(x, y);

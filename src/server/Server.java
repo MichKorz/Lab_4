@@ -30,12 +30,21 @@ public class Server
     }
 
     public Game game;
+    public Board board;
 
     // Game variant setup
     void Setup() // I changed it ~ Sara
     {
-        if(gameVariant.equals("Chaos")) game = new GameChaos(playerCount);
-        else game = new GameClassic(playerCount);
+        if(gameVariant.equals("Chaos"))
+        {
+            board = new BoardChaos(playerCount);
+            game = new GameChaos(playerCount, board);
+        }
+        else
+        {
+            board = new BoardClassic(playerCount);
+            game = new GameClassic(playerCount, board);
+        }
     }
 
     private boolean isRunning;

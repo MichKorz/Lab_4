@@ -1,6 +1,5 @@
 package client;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,10 +9,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import server.Board;
-import server.BoardChaos;
-import server.BoardClassic;
-import server.Tile;
 
 import java.awt.*;
 
@@ -25,6 +20,7 @@ public class GUIController
     public int playerCount;
     public String variant;
     public Button endTurnButton;
+    public String boardString;
 
     @FXML
     public TextField yourTurnField;
@@ -39,28 +35,32 @@ public class GUIController
     private TextField chatInput;
 
     String highlight = "";
-    Board board;
     Point initialPoint = null;
-
 
     public void generateBoard()
     {
-        if(variant.equals("Chaos")) board = new BoardChaos(playerCount);
-            else board = new BoardClassic(playerCount);
         yourTurnField.setVisible(false);
         boardPane.setAlignment(Pos.CENTER);
-        boardPane.setVgap(5);
-        boardPane.setHgap(-10);
-        for (int row = 0; row < 17; row++) {
-            for (int col = 0; col < 25; col++) {
-                Tile tile = board.GetTileAt(row, col);
-                if (tile.getOwner() != 9) {
-                    Circle circle = new Circle(15, getColor(tile.getPiece()));
-                    if(!variant.equals("Chaos")) circle.setStroke(getColor(tile.getPiece()));
-                    circle.setStrokeWidth(2);
-                    circle.setOnMouseClicked(event -> circlePressed(circle));
-                    boardPane.add(circle, col, row);
-                }
+        boardPane.setVgap(5); //5
+        boardPane.setHgap(-10); //-10
+
+        String[] splitBoard = boardString.split(" ");
+        Point[] boardCoords = new Point[splitBoard.length/2]; // piece, owner
+
+        for (int i = 0; i < splitBoard.length; i += 2) {
+            boardCoords[i/2] = new Point(Integer.parseInt(splitBoard[i]), Integer.parseInt(splitBoard[i+1]));
+        }
+
+        for (int i = 0; i < boardCoords.length; i++)
+        {
+            int piece = boardCoords[i].x;
+            int owner = boardCoords[i].y;
+            if (owner != 9) {
+                Circle circle = new Circle(15, getColor(piece));
+                if(!variant.equals("Chaos")) circle.setStroke(getColor(piece));
+                circle.setStrokeWidth(2);
+                circle.setOnMouseClicked(event -> circlePressed(circle));
+                boardPane.add(circle, i%25, i/25);
             }
         }
     }
@@ -72,6 +72,7 @@ public class GUIController
 
     public void highlightCircles(String coordinates)
     {
+        System.out.println("DEBUG coordinates = " + coordinates);
         highlight = coordinates;
 
         String[] splitMove = coordinates.split(" ");
@@ -87,7 +88,7 @@ public class GUIController
         dropShadow.setOffsetY(1);
         for (int i = 0; i < splitMove.length; i+=2){
             Circle circle = getCircleAt(coords[i], coords[i+1]);
-            circle.setEffect(dropShadow);
+            if(circle != null) circle.setEffect(dropShadow);
         }
     }
 

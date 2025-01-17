@@ -69,7 +69,6 @@ public class GameLoop implements GameState
             }
 
             currentPlayer.sendMessage("/y_0");
-            server.sendChatMessage("/c_This is the end now ;((( But ooo, ooo");
             currentPlayer.setTurn(false);
             if (howManyPlayersWon < server.game.HowManyWonGame())
             {

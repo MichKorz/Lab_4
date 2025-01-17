@@ -46,8 +46,8 @@ public class Client
                     String initialInfo = reader.readLine(); // Blocking call, will wait for input
                     // TODO Verify that the message is in fact a game variant
                     // Ensure the game launch happens on the JavaFX Application Thread
-                    String[] params = initialInfo.split(" ");
-                    Platform.runLater(() -> app.launchGame(params[0], Integer.parseInt(params[1])));
+                    String[] params = initialInfo.split("_");
+                    Platform.runLater(() -> app.launchGame(params[0], Integer.parseInt(params[1]), params[2]));
                     socket.setSoTimeout(0); // Turn off the timeout as the client will wait for server instructions for
                     // the remainder of the game
                 }

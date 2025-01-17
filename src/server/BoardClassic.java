@@ -32,7 +32,6 @@ public class BoardClassic extends Board{
                     else board[i][j] = new Tile(tileOwner, 0);
                 }
 
-                //Dupaprint
                 if(tileOwner != 9) System.out.print(tileOwner + " ");
                 else System.out.print("  ");
             }
