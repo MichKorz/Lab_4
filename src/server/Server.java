@@ -10,21 +10,23 @@ public class Server
 {
     private static Server instance;
     public int playerCount;
+    private final int botCount;
     public String gameVariant;
     private final int port;
 
-    private Server(int port, int playerCount, String gameVariant)
+    private Server(int port, int playerCount, int botCount, String gameVariant)
     {
         this.port = port;
         this.playerCount = playerCount;
+        this.botCount = botCount;
         this.gameVariant = gameVariant;
     }
 
-    public static Server getInstance(int port, int playersCount, String gameVariant)
+    public static Server getInstance(int port, int playersCount, int botCount, String gameVariant)
     {
         if (instance == null)
         {
-            instance = new Server(port, playersCount, gameVariant);
+            instance = new Server(port, playersCount, botCount, gameVariant);
         }
         return instance;
     }
@@ -38,12 +40,12 @@ public class Server
     {
         if(gameVariant.equals("Chaos"))
         {
-            board = new BoardChaos(playerCount);
+            board = new BoardChaos(playerCount+botCount);
             ruleset = new RulesetClassic(board);
         }
         else
         {
-            board = new BoardClassic(playerCount);
+            board = new BoardClassic(playerCount+botCount);
             ruleset = new RulesetClassic(board);
         }
         game = new Game(board, ruleset);
@@ -89,6 +91,8 @@ public class Server
     {
         return players;
     }
+
+    public int getBotCount() { return botCount; }
 
     public void setActive(boolean active)
     {

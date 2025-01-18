@@ -9,25 +9,48 @@ public class GameLoop implements GameState
     int howManyPlayersWon;
     Server server;
     BlockingQueue<String> moveIn;
+    int botCount;
+    Bot bot;
 
     public GameLoop(Server server)
     {
         howManyPlayersWon = 0;
         this.server = server;
+        botCount = server.getBotCount();
         moveIn = server.getQueue();
+        if(botCount != 0) bot = new Bot(server.board, server);
     }
 
     @Override
     public void stateLoop()
     {
         int playerCount = server.getPlayerList().size();
-        ArrayList<Integer> playerBoardIndexes = GetPlayerList(playerCount);
+
+        ArrayList<Integer> playerBoardIndexes = GetPlayerList(playerCount+botCount);
         Player currentPlayer;
+
         int index = new Random().nextInt(playerCount);
+        int firstPlayerIndex = (index + 1)%playerCount; //index of the player that starts the game
+
         // to get player's index on board: playerBoardIndexes.get(index)
         while (true)
         {
             index = (index + 1)%playerCount;
+            System.out.println("(INDEX): "+index);
+
+            //bots play before the start of a new turn
+            if(botCount != 0 && index == firstPlayerIndex)
+            {
+                for(int i = 1; i <= botCount; i++)
+                {
+                    int botIndex = getBotBoardIndex(i);
+                    System.out.println("(BOT): "+botIndex);
+                    String botMove = bot.moveBot(botIndex);
+                    server.game.ValidateMove(botMove);
+                    PropagateMove(botMove);
+                }
+            }
+
             System.out.println("player's: " + playerBoardIndexes.get(index) + " turn");
 
             currentPlayer = server.getPlayerList().get(index);
@@ -108,6 +131,13 @@ public class GameLoop implements GameState
         {
             player.sendMessage(message);
         }
+    }
+
+    private int getBotBoardIndex(int n)
+    {
+        int playerCount = server.getPlayerList().size();
+        ArrayList<Integer> playerBoardIndexes = GetPlayerList(botCount + playerCount);
+        return playerBoardIndexes.get(playerCount-1+n);
     }
 
     ArrayList<Integer> GetPlayerList(int playerCount) {

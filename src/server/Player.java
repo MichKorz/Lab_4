@@ -70,9 +70,12 @@ public class Player implements Runnable
 
     public void sendMessage(String message)
     {
-        synchronized (out)
+        if(out != null) // out is null if there's only one player
         {
-            out.println(message);
+            synchronized (out)
+            {
+                out.println(message);
+            }
         }
     }
 

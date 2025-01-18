@@ -40,10 +40,6 @@ public class RulesetClassic implements Ruleset
             highlight.append(p.x).append(" ").append(p.y).append(" ");
         }
 
-        System.out.print("(DEBUG) Highlights: " + highlight);
-        if (point == null) System.out.println(" point is null!");
-        else System.out.println(" point is " + point.x + ", " + point.y);
-
         return highlight.toString();
     }
 
@@ -51,8 +47,6 @@ public class RulesetClassic implements Ruleset
     {
         Tile newTile = board.GetTileAt(x+xOffset, y+yOffset);
         if(newTile == null) return;
-        System.out.print("Checking for tile: " + x + ", " + y + ", " + xOffset + ", " + yOffset);
-        System.out.println(" newtile piece: " + newTile.getPiece() + ", owner: " + newTile.getOwner());
         if(newTile != null && newTile.getOwner() != 9) // check if tile belongs to the board
         {
             if(newTile.getPiece() == 0)
@@ -60,7 +54,6 @@ public class RulesetClassic implements Ruleset
                 if(point == null)
                 {
                     possibleTiles.add(new Point(x+xOffset, y+yOffset));
-                    System.out.print("Tile no hop. ");
                 }
             }
             else
@@ -68,7 +61,6 @@ public class RulesetClassic implements Ruleset
                 newTile = board.GetTileAt(x+xOffset+xOffset, y+yOffset+yOffset);
                 if(newTile != null && newTile.getPiece() == 0 && newTile.getOwner() != 9)
                 {
-                    System.out.print("Tile hop. ");
                     possibleTiles.add(new Point(x+xOffset+xOffset, y+yOffset+yOffset));
                 }
             }
@@ -79,7 +71,6 @@ public class RulesetClassic implements Ruleset
     public Boolean validateMove(int[] commands, AtomicBoolean isTurnOver) // initialX initialY destinationX destinationY validato playerIndex
     {
         if(point != null) {
-            System.out.println("Line 64");
             if(point.x != commands[0] && point.y != commands[1]) return false;
         }
 
@@ -113,7 +104,6 @@ public class RulesetClassic implements Ruleset
                         isTurnOver.set(true);
                     }
                 }
-                System.out.println("Possible tile: " + possibleTile.getX() + " " + possibleTile.getY());
                 initialTile.setPiece(0);
                 Tile destinationTile = board.GetTileAt(finalX, finalY);
                 destinationTile.setPiece(playerIndex);
