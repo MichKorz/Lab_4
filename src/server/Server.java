@@ -31,6 +31,7 @@ public class Server
 
     public Game game;
     public Board board;
+    public Ruleset ruleset;
 
     // Game variant setup
     void Setup() // I changed it ~ Sara
@@ -38,13 +39,14 @@ public class Server
         if(gameVariant.equals("Chaos"))
         {
             board = new BoardChaos(playerCount);
-            game = new GameChaos(playerCount, board);
+            ruleset = new RulesetClassic(board);
         }
         else
         {
             board = new BoardClassic(playerCount);
-            game = new GameClassic(playerCount, board);
+            ruleset = new RulesetClassic(board);
         }
+        game = new Game(board, ruleset);
     }
 
     private boolean isRunning;
