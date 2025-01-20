@@ -7,5 +7,5 @@ module javafx {
     exports client;
 
     opens client;
-    opens server;
+    //opens server;
 }

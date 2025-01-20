@@ -3,7 +3,8 @@ package server;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Bot {
+public class Bot
+{
     Board board;
     Server server;
 
