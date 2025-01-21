@@ -84,13 +84,15 @@ public class RulesetClassic implements Ruleset
         if(initialTile == null) return false;
         if(initialTile.getPiece() != playerIndex) return false;
 
+        GetHighlightTiles(x, y);
+        System.out.println(possibleTiles);
+
         Point newPos = new Point(finalX, finalY);
         for(Point possibleTile : possibleTiles)
         {
             if(possibleTile.x == newPos.x && possibleTile.y == newPos.y)
             {
                 // if piece moves without hoping over
-                //if((abs(possibleTile.y-y) == 0) || ((abs(possibleTile.x-x) + abs(possibleTile.y-y)) == 2 && (abs(possibleTile.y-y) != 0)))
                 if((abs(possibleTile.x-x) + abs(possibleTile.y-y)) == 2){
                     isTurnOver.set(true);
                     point = null;

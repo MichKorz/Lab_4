@@ -5,37 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f260f77-48f6-47fc-99cc-220baf24a745" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_4.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/GUIController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Listener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/classic.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/connect-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/AwaitPlayers.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Board.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/BoardChaos.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/BoardClassic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Bot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/EndGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Game.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/GameLoop.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/GameState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Ruleset.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/RulesetClassic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Tile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/GameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/RulesetClassic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/RulesetClassic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +29,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/MichKorz/Lab_4.git&quot;,
-    &quot;accountId&quot;: &quot;7cc8e78f-dce2-456e-974b-f742f2fece6f&quot;
+    &quot;accountId&quot;: &quot;624fc415-a836-406f-8b44-914274921d4c&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -73,20 +48,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Client_1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.Client_1">
     <configuration name="Client_1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="client.ClientApplication" />
@@ -98,7 +79,7 @@
     <configuration name="Server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="server.Main" />
       <module name="Lab_4_maven" />
-      <option name="PROGRAM_PARAMETERS" value="8080 1 1 classic" />
+      <option name="PROGRAM_PARAMETERS" value="8080 1 3 classic" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -111,8 +92,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
       </set>
     </attachedChunks>
   </component>
@@ -127,6 +108,9 @@
       <workItem from="1737400934687" duration="41000" />
       <workItem from="1737400991150" duration="7000" />
       <workItem from="1737401004479" duration="109000" />
+      <workItem from="1737409922567" duration="3113000" />
+      <workItem from="1737449005679" duration="348000" />
+      <workItem from="1737450507501" duration="9615000" />
     </task>
     <servers />
   </component>

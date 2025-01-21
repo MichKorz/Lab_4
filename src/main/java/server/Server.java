@@ -20,6 +20,13 @@ public class Server
         this.playerCount = playerCount;
         this.botCount = botCount;
         this.gameVariant = gameVariant;
+
+        if(playerCount == 0)
+        {
+            System.out.println("(FATAL ERROR) Player count is zero");
+            System.out.println("Server is shutting down");
+            System.exit(0);
+        }
     }
 
     public static Server getInstance(int port, int playersCount, int botCount, String gameVariant)

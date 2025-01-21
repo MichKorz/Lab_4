@@ -30,26 +30,13 @@ public class GameLoop implements GameState
         Player currentPlayer;
 
         int index = new Random().nextInt(playerCount);
-        int firstPlayerIndex = (index + 1)%playerCount; //index of the player that starts the game
+        int lastPlayerIndex = index; //index of the player that starts the game
 
         // to get player's index on board: playerBoardIndexes.get(index)
         while (true)
         {
             index = (index + 1)%playerCount;
             System.out.println("(INDEX): "+index);
-
-            //bots play before the start of a new turn
-            if(botCount != 0 && index == firstPlayerIndex)
-            {
-                for(int i = 1; i <= botCount; i++)
-                {
-                    int botIndex = getBotBoardIndex(i);
-                    System.out.println("(BOT): "+botIndex);
-                    String botMove = bot.moveBot(botIndex);
-                    server.game.ValidateMove(botMove);
-                    PropagateMove(botMove);
-                }
-            }
 
             System.out.println("player's: " + playerBoardIndexes.get(index) + " turn");
 
@@ -76,6 +63,7 @@ public class GameLoop implements GameState
                     PropagateMove(move); //update board then propagete it
                     if(server.game.isTurnOver())
                     {
+                        System.out.println("(PLAYER) turn is over for: " + move);
                         server.game.isTurnOver.set(false);
                         break;
                     }
@@ -93,6 +81,7 @@ public class GameLoop implements GameState
 
             currentPlayer.sendMessage("/y_0");
             currentPlayer.setTurn(false);
+
             if (howManyPlayersWon < server.game.HowManyWonGame())
             {
                 System.out.println("OMG! " + howManyPlayersWon + " won the game");
@@ -113,8 +102,49 @@ public class GameLoop implements GameState
                     break;
                 }
             }
+
+            Sleep(250);
+
+            //bots play after the end of turn
+            if(botCount != 0 && index == lastPlayerIndex)
+            {
+                for(int i = 1; i <= botCount; i++)
+                {
+                    int botIndex = getBotBoardIndex(i);
+                    System.out.println("(BOT): "+botIndex);
+
+                    String botMove = bot.moveBot(botIndex);
+
+                    if(!server.game.ValidateMove(botMove))
+                    {
+                        System.out.println("isTurnOver = " + server.game.isTurnOver());
+                        System.out.println("(ERROR): "+botMove);
+                    }
+                    else
+                    {
+                        PropagateMove(botMove);
+                    }
+                    server.game.setIsTurnOver(true);
+                    server.game.setIsTurnOver(false);
+                    server.board.PrintBoard();
+
+                    Sleep(250);
+                }
+            }
+
+
         }
         endState();
+    }
+
+    void Sleep(int milliseconds)
+    {
+        try {
+            Thread.sleep(milliseconds);
+        }
+        catch(InterruptedException e) {
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -127,6 +157,7 @@ public class GameLoop implements GameState
     void PropagateMove(String move)
     {
         String message = "/m_" + move;
+        System.out.println("PROPAGATING "+message);
         for (Player player : server.getPlayerList())
         {
             player.sendMessage(message);

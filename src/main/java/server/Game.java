@@ -23,7 +23,7 @@ public class Game
         return ruleset.GetHighlightTiles(x, y);
     }
 
-    public boolean ValidateMove(String move) // initialX initialY destinationX destinationY validato playerIndex
+    public boolean ValidateMove(String move) // initialX initialY destinationX destinationY playerIndex
     {
         String[] splitMove = move.split(" ");
         if (splitMove[0].equals("E"))
@@ -37,7 +37,6 @@ public class Game
         Boolean validation = ruleset.validateMove(commands, isTurnOver);
         if(validation) {
             movesMade++;
-            board.PrintBoard(); //DOEFWEPFdddddddddddddddddddddddd
             howManyPlayersWon = board.HowManyPlayersWon(howManyPlayersWon, commands[4]);
             return true;
         }
@@ -52,9 +51,10 @@ public class Game
     public void setIsTurnOver(boolean isTurnOver)
     {
         this.isTurnOver.set(isTurnOver);
-        if(!isTurnOver) {
+        if(isTurnOver) {
             ((RulesetClassic)ruleset).point = null;
         }
+        System.out.println(isTurnOver + " is turn over " + "THE POINT IS: " + ((RulesetClassic)ruleset).point);
     }
 
     public int HowManyWonGame()
