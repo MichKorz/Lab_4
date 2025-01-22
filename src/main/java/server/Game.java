@@ -54,7 +54,6 @@ public class Game
         if(isTurnOver) {
             ((RulesetClassic)ruleset).point = null;
         }
-        System.out.println(isTurnOver + " is turn over " + "THE POINT IS: " + ((RulesetClassic)ruleset).point);
     }
 
     public int HowManyWonGame()

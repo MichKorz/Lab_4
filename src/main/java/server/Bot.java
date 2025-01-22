@@ -118,6 +118,7 @@ public class Bot {
 
     private double getDistance(Point from, Point to)
     {
-        return Math.sqrt(Math.pow(Math.abs(from.x - to.x),2) + Math.pow(Math.abs(from.y - to.y),2));
+        //return Math.sqrt(Math.pow(Math.abs(from.x - to.x),2) + Math.pow(Math.abs(from.y - to.y),2));
+        return Math.abs(from.x - to.x) + Math.abs(from.y - to.y);
     }
 }

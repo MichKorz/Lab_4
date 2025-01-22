@@ -39,6 +39,9 @@ public class GUIController
 
     public void generateBoard()
     {
+        if(boardPane != null)
+            boardPane.getChildren().clear();
+
         yourTurnField.setVisible(false);
         boardPane.setAlignment(Pos.CENTER);
         boardPane.setVgap(5); //5
@@ -72,7 +75,7 @@ public class GUIController
 
     public void highlightCircles(String coordinates)
     {
-        System.out.println("DEBUG coordinates = " + coordinates);
+        //System.out.println("DEBUG coordinates = " + coordinates);
         highlight = coordinates;
 
         String[] splitMove = coordinates.split(" ");
@@ -205,5 +208,16 @@ public class GUIController
     public void printChatMessage(String message)
     {
         chatArea.appendText(message+"\n");
+    }
+
+    @FXML
+    private void sendChatMessage()
+    {
+        // Get the text from the TextField
+        String userInput = "/c_" + chatInput.getText();
+        client.sendMessage(userInput);
+
+        // Clear the TextField (optional)
+        chatInput.clear();
     }
 }

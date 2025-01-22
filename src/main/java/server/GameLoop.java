@@ -12,6 +12,9 @@ public class GameLoop implements GameState
     int botCount;
     Bot bot;
 
+    private boolean saved;
+    private boolean load;
+
     public GameLoop(Server server)
     {
         howManyPlayersWon = 0;
@@ -19,6 +22,9 @@ public class GameLoop implements GameState
         botCount = server.getBotCount();
         moveIn = server.getQueue();
         if(botCount != 0) bot = new Bot(server.board, server);
+
+        saved = false;
+        load = false;
     }
 
     @Override
@@ -50,6 +56,25 @@ public class GameLoop implements GameState
                 try
                 {
                     move = moveIn.take();
+                    if (move.startsWith("save"))
+                    {
+                        System.out.println("Initializing saving");
+                        String[] comps = move.split(" ");
+                        //Checks if correct length
+                        saveGame(comps[1]);
+                        saved = true;
+                        break;
+                    }
+
+                    if (move.startsWith("load"))
+                    {
+                        System.out.println("Initializing Loading");
+                        String[] comps = move.split(" ");
+                        //Checks if correct length
+                        loadGame(comps[1]);
+                        break;
+                    }
+
                     move = move.concat(" ").concat(Integer.toString(playerBoardIndexes.get(index)));
                 }
                 catch (InterruptedException e)
@@ -60,7 +85,7 @@ public class GameLoop implements GameState
                 if (server.game.ValidateMove(move))
                 {
                     System.out.println("Successfully moved " + move);
-                    PropagateMove(move); //update board then propagete it
+                    server.PropagateMove(move); //update board then propagete it
                     if(server.game.isTurnOver())
                     {
                         System.out.println("(PLAYER) turn is over for: " + move);
@@ -78,6 +103,8 @@ public class GameLoop implements GameState
                     }
                 }
             }
+
+            if( saved ) break;
 
             currentPlayer.sendMessage("/y_0");
             currentPlayer.setTurn(false);
@@ -103,7 +130,7 @@ public class GameLoop implements GameState
                 }
             }
 
-            Sleep(250);
+            server.Sleep(250);
 
             //bots play after the end of turn
             if(botCount != 0 && index == lastPlayerIndex)
@@ -122,29 +149,19 @@ public class GameLoop implements GameState
                     }
                     else
                     {
-                        PropagateMove(botMove);
+                        server.PropagateMove(botMove);
                     }
                     server.game.setIsTurnOver(true);
                     server.game.setIsTurnOver(false);
                     server.board.PrintBoard();
 
-                    Sleep(250);
+                    server.Sleep(250);
                 }
             }
 
 
         }
-        endState();
-    }
-
-    void Sleep(int milliseconds)
-    {
-        try {
-            Thread.sleep(milliseconds);
-        }
-        catch(InterruptedException e) {
-            throw new RuntimeException();
-        }
+        if(!load) endState();
     }
 
     @Override
@@ -152,16 +169,6 @@ public class GameLoop implements GameState
     {
         System.out.println("Game over");
         server.ChangeState(new EndGame(this.server));
-    }
-
-    void PropagateMove(String move)
-    {
-        String message = "/m_" + move;
-        System.out.println("PROPAGATING "+message);
-        for (Player player : server.getPlayerList())
-        {
-            player.sendMessage(message);
-        }
     }
 
     private int getBotBoardIndex(int n)
@@ -187,5 +194,35 @@ public class GameLoop implements GameState
         }
 
         return order;
+    }
+
+    private void saveGame(String name)
+    {
+        DatabaseApp database = server.database;
+
+        int newId = database.getHighestId() + 1;
+        database.insertGame(name);
+
+        for (String move : server.moves)
+        {
+            database.insertMove(newId, move);
+        }
+    }
+
+    private void loadGame(String name)
+    {
+        System.out.println("Loading game " + name);
+        DatabaseApp database = server.database;
+        int game_id = database.findGameId(name);
+
+        System.out.println(game_id);
+
+        if (game_id == -1) server.sendChatMessage("Game not found");
+        else
+        {
+            saved = true;
+            load = true;
+            server.ChangeState(new Replay(server, database.readMoves(game_id)));
+        }
     }
 }

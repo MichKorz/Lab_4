@@ -9,17 +9,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Server
 {
     private static Server instance;
+    public DatabaseApp database;
     public int playerCount;
     private final int botCount;
     public String gameVariant;
     private final int port;
+    public ArrayList<String> moves;
 
-    private Server(int port, int playerCount, int botCount, String gameVariant)
+    private Server(int port, int playerCount, int botCount, String gameVariant, DatabaseApp database)
     {
         this.port = port;
         this.playerCount = playerCount;
         this.botCount = botCount;
         this.gameVariant = gameVariant;
+        this.database = database;
+
+        moves = new ArrayList<>();
 
         if(playerCount == 0)
         {
@@ -29,11 +34,11 @@ public class Server
         }
     }
 
-    public static Server getInstance(int port, int playersCount, int botCount, String gameVariant)
+    public static Server getInstance(int port, int playersCount, int botCount, String gameVariant, DatabaseApp database)
     {
         if (instance == null)
         {
-            instance = new Server(port, playersCount, botCount, gameVariant);
+            instance = new Server(port, playersCount, botCount, gameVariant, database);
         }
         return instance;
     }
@@ -109,10 +114,33 @@ public class Server
 
     public void sendChatMessage(String message)
     {
+        System.out.println("(Debug print) output sent: " + message);
         for (Player player : getPlayerList())
         {
-            System.out.println("(Debug print) output sent: " + message);
             player.sendMessage(message);
+        }
+    }
+
+    public void PropagateMove(String move)
+    {
+        String message = "/m_" + move;
+        moves.add(message);
+        System.out.println("PROPAGATING "+message);
+        for (Player player : getPlayerList())
+        {
+            player.sendMessage(message);
+        }
+    }
+
+    public void Sleep(int milliseconds)
+    {
+        try
+        {
+            Thread.sleep(milliseconds);
+        }
+        catch(InterruptedException e)
+        {
+            throw new RuntimeException();
         }
     }
 }

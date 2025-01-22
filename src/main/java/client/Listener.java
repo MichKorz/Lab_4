@@ -1,5 +1,7 @@
 package client;
 
+import javafx.application.Platform;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -23,7 +25,7 @@ public class Listener implements Runnable
             // Read until the socket is closed
             while ((message = reader.readLine()) != null)
             {
-                System.out.println("MESSSSSSSAGE IS" + message);
+                //System.out.println("MESSSSSSSAGE IS" + message);
                 interpretMessage(message);
             }
         }
@@ -63,6 +65,9 @@ public class Listener implements Runnable
                     controller.setYourTurnField(Integer.parseInt(comps[1]) == 1);
                 }
                 break;
+
+            case "/r":
+                Platform.runLater(() -> controller.generateBoard());
         }
     }
 

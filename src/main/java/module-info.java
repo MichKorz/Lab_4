@@ -3,6 +3,7 @@ module javafx {
     requires javafx.fxml;
     requires java.desktop;
     requires jdk.compiler;
+    requires java.sql;
 
     exports client;
 

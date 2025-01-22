@@ -85,6 +85,14 @@ public class Player implements Runnable
         switch (comps[0])
         {
             case "/c":
+                if(comps[1].startsWith("save"))
+                {
+                    moveOut.add(comps[1]);
+                }
+                if(comps[1].startsWith("load"))
+                {
+                    moveOut.add(comps[1]);
+                }
                 server.sendChatMessage(comps[1]);
                 break;
 

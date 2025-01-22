@@ -27,6 +27,7 @@ public class EndGame implements GameState
     public void endState()
     {
         System.out.println("Game shut down");
+        server.sendChatMessage("Game Over");
         server.ChangeState(null);
     }
 }
