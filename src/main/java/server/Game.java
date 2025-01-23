@@ -25,6 +25,8 @@ public class Game
 
     public boolean ValidateMove(String move) // initialX initialY destinationX destinationY playerIndex
     {
+        if(move.isEmpty()) return false;
+
         String[] splitMove = move.split(" ");
         if (splitMove[0].equals("E"))
             return false;

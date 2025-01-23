@@ -4,22 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f260f77-48f6-47fc-99cc-220baf24a745" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/DatabaseApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Replay.java" afterDir="false" />
+    <list default="true" id="5f260f77-48f6-47fc-99cc-220baf24a745" name="Changes" comment="Implemented database integration.">
+      <change afterPath="$PROJECT_DIR$/src/test/java/server/BoardClassicTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/GUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Listener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Listener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/EndGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/EndGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/GameLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client/classic.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client/classic.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -69,8 +59,12 @@
     "Application.Client_1.executor": "Run",
     "Application.DatabaseApp.executor": "Run",
     "Application.Server.executor": "Run",
+    "JUnit.BoardClassicTest.howManyPlayersWon.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -85,7 +79,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Client_1">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="server" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.BoardClassicTest.howManyPlayersWon">
     <configuration name="Client_1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="client.ClientApplication" />
       <module name="Lab_4_maven" />
@@ -96,7 +98,23 @@
     <configuration name="Server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="server.Main" />
       <module name="Lab_4_maven" />
-      <option name="PROGRAM_PARAMETERS" value="8080 1 3 classic" />
+      <option name="PROGRAM_PARAMETERS" value="8080 1 1 classic" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoardClassicTest.howManyPlayersWon" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Lab_4_maven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="server" />
+      <option name="MAIN_CLASS_NAME" value="server.BoardClassicTest" />
+      <option name="METHOD_NAME" value="howManyPlayersWon" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -104,7 +122,13 @@
     <list>
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.Client_1" />
+      <item itemvalue="JUnit.BoardClassicTest.howManyPlayersWon" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BoardClassicTest.howManyPlayersWon" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -128,11 +152,25 @@
       <workItem from="1737409922567" duration="3113000" />
       <workItem from="1737449005679" duration="348000" />
       <workItem from="1737450507501" duration="9615000" />
-      <workItem from="1737554665241" duration="22823000" />
+      <workItem from="1737554665241" duration="28896000" />
     </task>
+    <task id="LOCAL-00001" summary="Implemented database integration.">
+      <option name="closed" value="true" />
+      <created>1737583017958</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737583017958</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implemented logic to the bot" />
+    <MESSAGE value="Implemented database integration." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented database integration." />
   </component>
 </project>
